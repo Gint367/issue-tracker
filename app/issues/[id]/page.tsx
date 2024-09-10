@@ -8,6 +8,7 @@ interface Props {
     params: { id:string}
 }
 async function IssueDetailPage({params}: Props ) {
+    // checks if id is other than a number
     if (Number.isNaN(Number(params.id))) {
         //console.log(typeof(params.id))
         notFound()
