@@ -4,15 +4,24 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const createIssueSchema = z.object ({
+const createIssueSchema = z.object ({ 
     title: z.string().min(1).max(255),
     description: z.string().min(1)
 })
+
+/**
+ * Handles a POST request to create a new issue.
+ * Validates the request body against a predefined schema and creates a new issue using Prisma.
+ * Returns a JSON response with the created issue or validation errors.
+ * @param request - The Next.js request object containing the request body.
+ * @returns A JSON response indicating the success or failure of the creation process.
+ */
 export async function POST(request: NextRequest) {
     const body = await request.json();
     const validation = createIssueSchema.safeParse(body);
     if (!validation.success)
         return NextResponse.json(validation.error.errors, { status: 400})
+    
     const newIssue = await prisma.issue.create({
         data: { title: body.title, description: body.description}
     })
