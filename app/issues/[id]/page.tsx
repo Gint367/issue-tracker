@@ -2,12 +2,14 @@ import IssueStatusBadge from '@/app/components/IssueStatusBadge'
 import prisma from '@/prisma/client'
 import { Card, Flex, Heading, Text } from '@radix-ui/themes'
 import { notFound } from 'next/navigation'
-import React from 'react'
+import ReactMarkdown from 'react-markdown';
+
 
 interface Props {
     params: { id:string}
 }
-async function IssueDetailPage({params}: Props ) {
+
+const IssueDetailPage = async ({ params }: Props) =>  {
     // checks if id is other than a number
     if (Number.isNaN(Number(params.id))) {
         //console.log(typeof(params.id))
@@ -17,8 +19,10 @@ async function IssueDetailPage({params}: Props ) {
     const issue = await prisma.issue.findUnique({
         where: { id: parseInt(params.id)}
     })
-    if (!issue)
-        notFound();
+    
+    if (!issue) notFound();
+
+    
     return (
         <div>
             <Heading>{issue.title} </Heading>
@@ -26,8 +30,8 @@ async function IssueDetailPage({params}: Props ) {
                 <IssueStatusBadge status={issue.status}/>
                 <Text>{issue.createdAt.toDateString()} </Text>
             </Flex>
-            <Card>
-                <p>{issue.description} </p>
+            <Card className='prose' mt={"4"}>
+            <ReactMarkdown children = {issue.description} />
             </Card>
         </div>
        
