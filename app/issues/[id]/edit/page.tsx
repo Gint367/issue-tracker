@@ -1,8 +1,7 @@
-import React from 'react'
-import IssueForm from '../../_components/IssueForm'
 import prisma from '@/prisma/client'
-import { notFound } from 'next/navigation'
 import dynamic from 'next/dynamic'
+import { notFound } from 'next/navigation'
+import IssueForm from '../../_components/IssueForm'
 import IssueFormSkeleton from './loading'
 
 const IsssueForm = dynamic(
