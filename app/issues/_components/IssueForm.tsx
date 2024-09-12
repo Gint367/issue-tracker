@@ -13,9 +13,7 @@ import { z } from 'zod';
 import ErrorMessages from '@/app/components/ErrorMessages';
 import Spinner from '@/app/components/Spinner';
 import { Issue } from '@prisma/client';
-
-const SimpleMDE = dynamic(() => import('react-simplemde-editor'), { ssr: false });
-
+import SimpleMDE from 'react-simplemde-editor'
 
 /* interface IssueForm {
   title: string,
