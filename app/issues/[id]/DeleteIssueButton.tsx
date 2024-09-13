@@ -2,37 +2,61 @@
 import { AlertDialog, Button, Flex } from '@radix-ui/themes'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { set } from 'zod'
 
-const DeleteIssueButton = ({ issueId}: { issueId: number}) => {
+const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
     const router = useRouter()
-  return (
-    <AlertDialog.Root>
-        <AlertDialog.Trigger>
-            <Button color="red">Delete Issue</Button>
-        </AlertDialog.Trigger>
-        <AlertDialog.Content>
-            <AlertDialog.Title>Confirm Deletion</AlertDialog.Title>
-            <AlertDialog.Description>
-                Are you sure you want to delete this issue?
-            </AlertDialog.Description>
-              <Flex gap="3">
-                  <AlertDialog.Action>
-                      <Button onClick={async () => {
-                        await axios.delete(`/api/issues/${issueId}`)
-                        router.push('/issues')
-                        router.refresh()
-                      }} color="red">Delete</Button>
+    const [error, setError] = useState(false)
 
-                  </AlertDialog.Action>
-                  <AlertDialog.Cancel>
-                      <Button variant='soft'>Cancel</Button>
+    const deleteIssue = async () => {
+        try {                 
+            await axios.delete(`/api/issues/${issueId}`)
+            router.push('/issues')
+            router.refresh()
+        } catch (error) {
+            setError(true)
+        }
+    }
 
-                  </AlertDialog.Cancel>
-              </Flex>
-        </AlertDialog.Content>
-    </AlertDialog.Root>
-    
-  )
+
+    return (
+        <>
+            <AlertDialog.Root>
+                <AlertDialog.Trigger>
+                    <Button color="red">Delete Issue</Button>
+                </AlertDialog.Trigger>
+                <AlertDialog.Content>
+                    <AlertDialog.Title>Confirm Deletion</AlertDialog.Title>
+                    <AlertDialog.Description>
+                        Are you sure you want to delete this issue?
+                    </AlertDialog.Description>
+                    <Flex gap="3">
+                        <AlertDialog.Action>
+                            <Button onClick={deleteIssue} color="red">Delete</Button>
+
+                        </AlertDialog.Action>
+                        <AlertDialog.Cancel>
+                            <Button variant='soft'>Cancel</Button>
+
+                        </AlertDialog.Cancel>
+                    </Flex>
+                </AlertDialog.Content>
+            </AlertDialog.Root>
+            <AlertDialog.Root open={error}>
+                <AlertDialog.Content>
+                    <AlertDialog.Title>Error</AlertDialog.Title>
+                    <AlertDialog.Description>
+                        An error occurred while deleting the issue
+                    </AlertDialog.Description>
+                    <AlertDialog.Action>
+                        <Button color="gray" variant='soft' mt={"2"} onClick={() => setError(false)}>OK</Button>
+                    </AlertDialog.Action>
+                </AlertDialog.Content>
+            </AlertDialog.Root>
+        </>
+
+    )
 }
 
 export default DeleteIssueButton
