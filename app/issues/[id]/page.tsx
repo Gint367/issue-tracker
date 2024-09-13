@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import EditIssueButton from './EditIssueButton';
 import IssueDetails from './IssueDetails';
 import DeleteIssueButton from './DeleteIssueButton';
+import { getServerSession } from 'next-auth';
+import authOptions from '@/app/auth/authOptions';
 
 
 interface Props {
@@ -11,6 +13,7 @@ interface Props {
 }
 
 const IssueDetailPage = async ({ params }: Props) =>  {
+    const session = await getServerSession(authOptions)
     // checks if id is other than a number
     if (Number.isNaN(Number(params.id))) {
         //console.log(typeof(params.id))
@@ -31,14 +34,14 @@ const IssueDetailPage = async ({ params }: Props) =>  {
                 <IssueDetails issue={issue} />
 
             </Box>
-            <Box>
+            {session && <Box>
                 <Flex direction={"column"} gap={"4"}>
                     <EditIssueButton issueId={issue.id} />
                     <DeleteIssueButton issueId={issue.id} />
 
                 </Flex>
 
-            </Box>
+            </Box>}
         </Grid>
     )
 }
