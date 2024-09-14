@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import React, { use, useEffect } from 'react'
 import { Skeleton } from '@/app/components'
+import toast, { Toaster } from 'react-hot-toast'
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const { data: users, error, isLoading } = useQuery<User[]>({
@@ -18,27 +19,33 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
 
 
   return (
-    <Select.Root
-      defaultValue={issue.assignedToUserId || ''}
-      onValueChange={(userId) => {
-        axios.patch('/api/issues/' + issue.id, {
-          assignedToUserId: userId === 'unassign' ? null : userId
-        })
-      }}>
+    <>
+      <Select.Root
+        defaultValue={issue.assignedToUserId || ''}
+        onValueChange={(userId) => {
+          axios.patch('/api/issues/' + issue.id, {
+            assignedToUserId: userId === 'unassign' ? null : userId
+          }).catch(() => {
+            toast.error('An error occured while assigning the issue')
+          })
+        }}>
 
-      <Select.Trigger placeholder='Assign to..'>
-      </Select.Trigger>
-      <Select.Content>
-        <Select.Group>
-          <Select.Label>Suggestions</Select.Label>
-          <Select.Item value="unassign">Unassigned</Select.Item>
-          {users?.map(user => (
-            <Select.Item key={user.id} value={user.id}>{user.name}</Select.Item>
-          ))}
+        <Select.Trigger placeholder='Assign to..'>
+        </Select.Trigger>
+        <Select.Content>
+          <Select.Group>
+            <Select.Label>Suggestions</Select.Label>
+            <Select.Item value="unassign">Unassigned</Select.Item>
+            {users?.map(user => (
+              <Select.Item key={user.id} value={user.id}>{user.name}</Select.Item>
+            ))}
 
-        </Select.Group>
-      </Select.Content>
-    </Select.Root>
+          </Select.Group>
+        </Select.Content>
+      </Select.Root>
+      <Toaster />
+    </>
+
   )
 }
 
