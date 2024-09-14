@@ -33,7 +33,7 @@ const IssuesPage = async ({ searchParams }: {
   const issueCount = await prisma.issue.count({ where })
   //await delay(2000)
   return (
-    <Flex direction={"column"} gap={"3"}>
+    <Flex direction={"column"} gap={"3"} justify={'between'}>
 
       <IssueActions />
       <IssueTable searchParams={searchParams} issue={issue} />
