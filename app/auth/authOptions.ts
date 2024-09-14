@@ -4,7 +4,6 @@ import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 const authOptions: NextAuthOptions = {
-
     adapter: PrismaAdapter(prisma),
     providers: [
         GoogleProvider({
@@ -15,7 +14,13 @@ const authOptions: NextAuthOptions = {
     session: {
         strategy: 'jwt',
     },
+    callbacks: {
+        async redirect({ url, baseUrl }) {
+            TODO: 'fix bugs, the default callback is always go to /issues/new'
+            return baseUrl;
+        }
 
+    }
 }
 
 export default authOptions
