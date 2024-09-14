@@ -10,25 +10,25 @@ import AssigneeSelect from './AssigneeSelect';
 
 
 interface Props {
-    params: { id:string}
+    params: { id: string }
 }
 
-const IssueDetailPage = async ({ params }: Props) =>  {
+const IssueDetailPage = async ({ params }: Props) => {
     const session = await getServerSession(authOptions)
     // checks if id is other than a number
     if (Number.isNaN(Number(params.id))) {
         //console.log(typeof(params.id))
         notFound()
     }
-        
+
     const issue = await prisma.issue.findUnique({
-        where: { id: parseInt(params.id)}
+        where: { id: parseInt(params.id) }
     })
-    
+
     if (!issue) notFound();
-    
+
     //await delay(2000)
-    
+
     return (
         <Grid columns={{ initial: "1", sm: "5" }} gap={"5"}>
             <Box className='md:col-span-4'>
@@ -37,7 +37,7 @@ const IssueDetailPage = async ({ params }: Props) =>  {
             </Box>
             {session && <Box>
                 <Flex direction={"column"} gap={"4"}>
-                    <AssigneeSelect  />
+                    <AssigneeSelect issue={issue} />
                     <EditIssueButton issueId={issue.id} />
                     <DeleteIssueButton issueId={issue.id} />
 
