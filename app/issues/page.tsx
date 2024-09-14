@@ -38,7 +38,7 @@ const IssuesPage = async ({ searchParams }: { searchParams: { status: Status, or
       <Table.Root variant='surface'>
         <Table.Header>
           <Table.Row>
-            {columns.map(column => <Table.ColumnHeaderCell key={column.value}>
+            {columns.map(column => <Table.ColumnHeaderCell key={column.value} className={column.className}>
               <NextLink href={{
                 query: { ...searchParams, orderBy: column.value }
               }}>{column.label}</NextLink>
