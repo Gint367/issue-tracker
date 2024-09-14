@@ -78,7 +78,7 @@ function NavRight(status: string, session: Session | null) {
                         </Text>
                     </DropdownMenu.Label>
                     <DropdownMenu.Item>
-                        <Link href="/api/auth/signout">Log Out</Link>
+                        <Link className='block w-full' href="/api/auth/signout">Log Out</Link>
                     </DropdownMenu.Item>
                 </DropdownMenu.Content>
 
