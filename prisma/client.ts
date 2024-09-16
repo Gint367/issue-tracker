@@ -1,7 +1,10 @@
 import { PrismaClient } from '@prisma/client'
 
 const prismaClientSingleton = () => {
-  return new PrismaClient()
+  return new PrismaClient({
+
+  })
+
 }
 
 // This file make sure that only 1 instance of prisma at all time
