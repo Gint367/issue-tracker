@@ -6,9 +6,11 @@ generator client {
 }
 
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider = "postgresql"
+
+  url = env("issue_tracker_PRISMA_URL") // uses connection pooling
+
+  directUrl = env("issue_tracker_URL_NON_POOLING") // uses a direct connection
 }
 
 model Issue {
