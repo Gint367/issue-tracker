@@ -14,13 +14,7 @@ const authOptions: NextAuthOptions = {
     session: {
         strategy: 'jwt',
     },
-    callbacks: {
-        async redirect({ url, baseUrl }) {
-            TODO: 'fix bugs, the default callback is always go to /issues/new'
-            return baseUrl;
-        }
 
-    }
 }
 
 export default authOptions
