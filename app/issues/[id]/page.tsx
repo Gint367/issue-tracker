@@ -25,7 +25,14 @@ const IssueDetailPage = async ({ params }: Props) => {
         notFound()
     }
 
+<<<<<<< HEAD
     const issue = await fetchUser(parseInt(params.id))
+=======
+    const issue = await prisma.issue.findUnique({
+        where: { id: parseInt(params.id) }
+
+    })
+>>>>>>> 3cf9c9216b0d22ac456adf94d62ebdc249a6a554
 
     if (!issue) notFound();
 
@@ -51,7 +58,11 @@ const IssueDetailPage = async ({ params }: Props) => {
 }
 
 export async function generateMetadata({ params }: Props) {
+<<<<<<< HEAD
     const issue = await fetchUser(parseInt(params.id))
+=======
+    const issue = await prisma.issue.findUnique({ where: { id: parseInt(params.id) } })
+>>>>>>> 3cf9c9216b0d22ac456adf94d62ebdc249a6a554
     return {
         title: 'Issue: ' + issue?.title,
         description: 'Details of the issue' + issue?.id
