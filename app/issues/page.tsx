@@ -17,9 +17,8 @@ const IssuesPage = async ({ searchParams }: {
   const status = statuses.includes(searchParams.status) ? searchParams.status : undefined
   const where = { status }
 
-  const orderBy = columnNames
-    .includes(searchParams.orderBy)
-    ? { [searchParams.orderBy]: 'asc' }
+  const orderBy = columnNames.includes(searchParams.orderBy)
+    ? { [searchParams.orderBy]: searchParams.orderDirection === 'asc' ? 'asc' : 'desc' }
     : undefined
 
 

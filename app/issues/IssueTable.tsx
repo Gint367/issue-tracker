@@ -1,12 +1,13 @@
 import { IssueStatusBadge, Link } from '@/app/components'
 import { Status, Issue } from '@prisma/client'
-import { ArrowUpIcon } from '@radix-ui/react-icons'
+import { ArrowDownIcon, ArrowUpIcon } from '@radix-ui/react-icons'
 import { Table } from '@radix-ui/themes'
 import NextLink from 'next/link'
 
 export interface IssueQuery {
     status: Status,
     orderBy: keyof Issue,
+    orderDirection: 'asc' | 'desc',
     page: string
 }
 interface Props {
@@ -19,12 +20,22 @@ const IssueTable = ({ searchParams, issue }: Props) => {
         <Table.Root variant='surface'>
             <Table.Header>
                 <Table.Row>
-                    {columns.map(column => <Table.ColumnHeaderCell key={column.value} className={column.className}>
-                        <NextLink href={{
-                            query: { ...searchParams, orderBy: column.value }
-                        }}>{column.label}</NextLink>
-                        {column.value === searchParams.orderBy && <ArrowUpIcon className='inline' />}
-                    </Table.ColumnHeaderCell>)}
+                    {columns.map(column => (
+                        <Table.ColumnHeaderCell key={column.value} className={column.className}>
+                            <NextLink href={{
+                                query: {
+                                    ...searchParams,
+                                    orderBy: column.value,
+                                    orderDirection: searchParams.orderBy === column.value && searchParams.orderDirection === 'desc' ? 'asc' : 'desc'
+                                }
+                            }}>
+                                {column.label}
+                            </NextLink>
+                            {column.value === searchParams.orderBy && (
+                                searchParams.orderDirection === 'asc' ? <ArrowUpIcon className='inline' /> : <ArrowDownIcon className='inline' />
+                            )}
+                        </Table.ColumnHeaderCell>
+                    ))}
                 </Table.Row>
             </Table.Header>
             <Table.Body>
