@@ -32,7 +32,7 @@ const LatestIssues = async () => {
                                     {issue.assignedToUser && <Avatar
                                         src={issue.assignedToUser.image!}
                                         fallback={''}
-                                        size={"2"}
+                                        size={"3"}
                                         radius='full' />}
                                 </Flex>
                             </Table.Cell>

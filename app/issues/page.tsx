@@ -3,7 +3,7 @@ import { Issue, Status } from '@prisma/client'
 import Pagination from '../components/Pagination'
 import IssueActions from './IssueActions'
 import IssueTable, { columnNames, IssueQuery } from './IssueTable'
-import { Flex } from '@radix-ui/themes'
+import { Flex, Text } from '@radix-ui/themes'
 import { Metadata } from 'next'
 
 
@@ -37,6 +37,7 @@ const IssuesPage = async ({ searchParams }: {
 
       <IssueActions />
       <IssueTable searchParams={searchParams} issue={issue} />
+      <Text>Showing {issue.length} of {issueCount} issues</Text>
       <Pagination
         pageSize={pageSize}
         currentPage={page}
