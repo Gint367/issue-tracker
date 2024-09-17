@@ -37,13 +37,25 @@ const IssuesPage = async ({ searchParams }: {
 
       <IssueActions />
       <IssueTable searchParams={searchParams} issue={issue} />
-      <Text>Showing {issue.length} of {issueCount} issues</Text>
+      <Text>
+        Showing
+        <input
+          name='varpageSize'
+          type="number"
+          value={issue.length}
+          //onChange={e => pageSize = parseInt(e.target.value)}
+          style={{ width: '50px', margin: '0 5px' }}
+        />
+        of {issueCount} issues
+      </Text>
+
       <Pagination
         pageSize={pageSize}
         currentPage={page}
         itemCount={issueCount} />
 
     </Flex>
+
   )
 }
 
