@@ -13,9 +13,10 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
 
   const assignIssue = (userId: string) => {
     axios.patch('/api/issues/' + issue.id, {
-      assignedToUserId: userId === 'unassign' ? null : userId
+      assignedToUserId: userId === 'unassign' ? null : userId,
+      status: userId === 'unassign' ? 'OPEN' : 'IN_PROGRESS'
     }).catch(() => {
-      toast.error('An error occured while assigning the issue')
+      toast.error('An error occurred while assigning the issue')
     })
   }
 
