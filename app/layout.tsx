@@ -8,9 +8,10 @@ import NavBar from './NavBar'
 import { Container, Theme, ThemePanel } from '@radix-ui/themes';
 import AuthProvider from './auth/Provider';
 import QueryClientProvider from './QueryClientProvider';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
@@ -41,6 +42,7 @@ export default function RootLayout({
           </AuthProvider>
 
         </QueryClientProvider>
+        <SpeedInsights />
       </body>
 
     </html>
